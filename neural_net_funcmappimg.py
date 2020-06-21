@@ -1,9 +1,10 @@
 #building a neural network 
-# architecture input(1x1)->hidden layer(size =10) with reLU activation-> (linear) output layer(1)
+# architecture input(1x1)->hidden layer with reLU activation-> (linear) output layer(1)
 import tensorflow as tf
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+import sys
 
 def add_layer(inputs,in_size,out_size,activation_func = None):
     weights=tf.Variable(tf.random_normal([in_size,out_size]))
@@ -15,25 +16,31 @@ def add_layer(inputs,in_size,out_size,activation_func = None):
         scores=activation_func(h1)
     return scores
 
+# defining number of data points
+n = 500
+
 #real data
-x_data=np.linspace(-1,1,500)[:, np.newaxis] #(-1,1,400) range of the values is from -1 to 1 and 400 linearly spaced
+x_data=np.linspace(-1,1,n)[:, np.newaxis] #(-1,1,400) range of the values is from -1 to 1 and 400 linearly spaced
                                             #points is returned, np.newaxis makes the dim of x_data->(400,1) insted of (400,)
+
 noise=np.random.normal(0,0.1,x_data.shape) # 0 is the mean and 0.05 is the standard deviation   
+
 # uncomment below code to try out different non-linear functions
-#y_data=np.square(x_data)+2.0
-y_data = (x_data*x_data)*x_data +2.0*x_data**2 +1.2 +noise
-# y_data = (x_data*x_data)*x_data +2.0*x_data**2 +4.5 *np.sin(x_data) + 1.2 +noise
-#y_data = np.sqrt(x_data+1)
-#y_data = np.sin(5*x_data)+1
+
+if str(sys.argv[1])=='square':
+    y_data=np.square(x_data)+ noise
+elif str(sys.argv[1])=='cube':    
+    y_data = 5*(x_data*x_data)*x_data +noise
+elif str(sys.argv[1]=='sine'):
+    y_data = np.sin(5*x_data)+noise    
 
 # defining placeholders for inputs
 xs=tf.placeholder(tf.float32,[None,1]) # None represents the no.of training expamples and 1 is the no. of features
 ys=tf.placeholder(tf.float32,[None,1]) # None represents the no.of training expamples and 1 is the no. of output class or no.of outputs
 
 
-# adding layers
+# adding layers for constructing a one hidden layer neural network
 layer1=add_layer(xs,1,40,activation_func=tf.nn.relu)
-#layer2=add_layer(layer1,30,5,activation_func=tf.nn.sigmoid)
 output=add_layer(layer1,40,1,activation_func=None)
 
 # learning rate and num_iters
