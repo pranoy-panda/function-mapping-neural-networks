@@ -1,5 +1,6 @@
 # Function mapping using a neural network with a single hidden layer
 ![](./sine.gif)
+
 This repository contains code for my experimentation with the expressivity of neural networks with a single hidden layer. 
 
 Note: To simulate real world feel I have added Gaussian noise with mean=0 and standard deviation of 0.1
