@@ -3,7 +3,7 @@
 
 This repository contains code for my experimentation with the expressivity of neural networks with a single hidden layer. 
 
-Note: To simulate real world feel I have added Gaussian noise with mean=0 and standard deviation of 0.1
+Note: To make the input data more realistic I have added Gaussian noise with mean=0 and standard deviation of 0.1
 
 ## Requirement
 - Python 2.7+ or 3.5+.
